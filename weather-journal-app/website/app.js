@@ -31,7 +31,7 @@ const getWeather = async (baseULR, zip, key)=>{
     const res = await fetch(baseULR+zip+key)
     console.log(res)
     try{
-        const data = res.text();
+        const data = await res.json();
         console.log(data)
         return data
     }catch(error){
@@ -50,7 +50,7 @@ const postData = async (url = '', data={})=>{
         body: JSON.stringify(data)
     });
     try{
-        const newData = await req.text()
+        const newData = await req.json()
         console.log(newData)
         return newData
     }catch(error){
@@ -61,11 +61,11 @@ const postData = async (url = '', data={})=>{
 const updateUi = async ()=>{
     const req = await fetch('/allData')
     try{
-        const allData = await req.text();
+        const allData = await req.json();
         // console.log(allData)
-        document.getElementById('data').innerHTML = 'Date:' + newDate;
-        document.getElementById('temp').innerHTML = temperature;
-        document.getElementById('content').innerHTML = content;
+        document.getElementById('data').innerHTML = 'Date:' + allData.date;
+        document.getElementById('temp').innerHTML = allData.temp;
+        document.getElementById('content').innerHTML = allData.content;
     }catch(error){
         console.log('Error', error)
     }
