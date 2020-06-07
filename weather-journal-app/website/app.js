@@ -1,14 +1,13 @@
 /* Global Variables */
 
 // Personal API Key for OpenWeatherMap API
-const baseULR = 'api.openweathermap.org/data/2.5/weather?zip=';
-const apiKey = '&appid=53e0f16c273b81224d6cae71e9ef9199';
+const baseULR = 'http://api.openweathermap.org/data/2.5/weather?zip=';
+const apiKey = '&appid=53e0f16c273b81224d6cae71e9ef9199&units=imperial';
 
 // Create a new date instance dynamically with JS
 let d = new Date();
 let newDate = d.getMonth()+'.'+ d.getDate()+'.'+ d.getFullYear();
-console.log(newDate)
-// console.log(baseULR+'94040'+apiKey);
+// console.log(newDate)
 
 // Event listener to add function to existing HTML DOM element
 document.getElementById('generate').addEventListener('click', performAction)
@@ -29,10 +28,8 @@ function performAction(e){
 /* Function to GET Web API Data*/
 const getWeather = async (baseULR, zip, key)=>{
     const res = await fetch(baseULR+zip+key)
-    console.log(res)
     try{
         const data = await res.json();
-        console.log(data)
         return data
     }catch(error){
         console.log('Error', error);
@@ -51,7 +48,6 @@ const postData = async (url = '', data={})=>{
     });
     try{
         const newData = await req.json()
-        console.log(newData)
         return newData
     }catch(error){
         console.log('Error', error)
@@ -62,7 +58,6 @@ const updateUi = async ()=>{
     const req = await fetch('/allData')
     try{
         const allData = await req.json();
-        // console.log(allData)
         document.getElementById('date').innerHTML = 'Date:' + allData.date;
         document.getElementById('temp').innerHTML = allData.temp;
         document.getElementById('content').innerHTML = allData.content;
